@@ -16,9 +16,9 @@
     {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
   </title>
 
-  {%- if settings.favicon != blank -%}
-    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
-  {%- endif -%}
+  {% if settings.favicon != blank %}
+  <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+{% endif %}
 
   <!-- Canonical & hreflang -->
   <link rel="canonical" href="{{ canonical_url }}">
