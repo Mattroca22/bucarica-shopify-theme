@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -13,19 +22,20 @@
         "btn_secondary_label": "Nuestra historia",
         "btn_secondary_url": "#about",
         "quote": "«Un libro es un sueño que tienes en tus manos.» — Neil Gaiman",
-        "bg_color": "#F5F5DC"
+        "bg_color": "#f5f5dc"
       }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
+        "collection": "",
+        "products_limit": 6,
         "title": "Selección Destacada",
         "subtitle": "Una pequeña muestra de lo que te espera en nuestra librería",
-        "products_limit": 6,
         "show_filters": true,
         "show_cta": true,
         "cta_label": "Ver catálogo completo →",
-        "bg_color": "#FAF8F2"
+        "bg_color": "#faf8f2"
       }
     },
     "about": {
@@ -42,12 +52,11 @@
         "stat2_label": "Títulos disponibles",
         "stat3_num": "4.9★",
         "stat3_label": "Valoración promedio",
-        "bg_color": "#4B3621"
+        "bg_color": "#4b3621"
       }
     },
     "reviews": {
       "type": "reviews",
-      "block_order": ["review_1", "review_2"],
       "blocks": {
         "review_1": {
           "type": "review",
@@ -68,9 +77,13 @@
           }
         }
       },
+      "block_order": [
+        "review_1",
+        "review_2"
+      ],
       "settings": {
         "title": "Lo que dicen nuestros lectores",
-        "bg_color": "#FAF8F2"
+        "bg_color": "#faf8f2"
       }
     },
     "contact": {
@@ -78,15 +91,23 @@
       "settings": {
         "title": "Visítanos o escríbenos",
         "subtitle": "¿Buscas un título específico? ¿Quieres una recomendación? Con gusto te ayudamos.",
+        "placeholder": "¿Qué libro estás buscando o qué quieres decirnos?",
         "btn_label": "Enviar mensaje",
+        "success_msg": "Mensaje enviado. Te responderemos pronto.",
         "show_info": true,
-        "address": "Calle 10 #43E-31, El Poblado, Medellín",
-        "hours": "Lun–Sáb 10am–7pm · Dom 11am–5pm",
-        "whatsapp": "+57 311 000 0000",
+        "address": "Cra. 48 # 49-38 local 127",
+        "hours": "Lun–Sáb 10am–7pm",
+        "whatsapp": "+57 323 5885862",
         "instagram": "@bucarica.libros",
-        "bg_color": "#FAF8F2"
+        "bg_color": "#faf8f2"
       }
     }
   },
-  "order": ["hero", "featured_collection", "about", "reviews", "contact"]
+  "order": [
+    "hero",
+    "featured_collection",
+    "about",
+    "reviews",
+    "contact"
+  ]
 }
