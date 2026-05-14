@@ -1,0 +1,43 @@
+<footer class="buca-footer" role="contentinfo">
+  <div class="buca-footer__inner">
+    <p class="buca-footer__copy">
+      © {{ 'now' | date: '%Y' }} {{ section.settings.copyright_text | default: shop.name }}
+      &nbsp;·&nbsp; Medellín, Colombia
+    </p>
+
+    {%- if section.settings.show_payment_icons -%}
+      <div class="buca-footer__payment" aria-label="Métodos de pago">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'buca-footer__payment-icon' }}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "footer",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Texto de copyright",
+      "default": "Bucarica Librería · Todos los derechos reservados"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Mostrar iconos de métodos de pago",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
+}
+{% endschema %}

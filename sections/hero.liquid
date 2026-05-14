@@ -1,0 +1,177 @@
+<section
+  id="hero-{{ section.id }}"
+  class="buca-hero"
+  style="background-color: {{ section.settings.bg_color }};"
+>
+  <div class="buca-hero__inner">
+
+    <!-- COLUMNA TEXTO -->
+    <div class="buca-hero__content">
+      {%- if section.settings.tagline != blank -%}
+        <p class="buca-hero__tagline">{{ section.settings.tagline }}</p>
+      {%- endif -%}
+
+      <h1 class="buca-hero__title">
+        {{ section.settings.title_line1 }}
+        {%- if section.settings.title_line2 != blank -%}
+          <em class="buca-hero__title-em">{{ section.settings.title_line2 }}</em>
+        {%- endif -%}
+        {{ section.settings.title_line3 }}
+      </h1>
+
+      {%- if section.settings.description != blank -%}
+        <p class="buca-hero__desc">{{ section.settings.description }}</p>
+      {%- endif -%}
+
+      <div class="buca-hero__btns">
+        {%- if section.settings.btn_primary_label != blank -%}
+          <a
+            href="{{ section.settings.btn_primary_url }}"
+            class="buca-btn buca-btn--primary"
+          >
+            {{ section.settings.btn_primary_label }}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.btn_secondary_label != blank -%}
+          <a
+            href="{{ section.settings.btn_secondary_url }}"
+            class="buca-btn buca-btn--outline"
+          >
+            {{ section.settings.btn_secondary_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- COLUMNA VISUAL: imagen o libros decorativos -->
+    <div class="buca-hero__visual" aria-hidden="true">
+      {%- if section.settings.hero_image != blank -%}
+        {{
+          section.settings.hero_image
+          | image_url: width: 600
+          | image_tag: loading: 'eager', class: 'buca-hero__img', alt: ''
+        }}
+      {%- else -%}
+        <!-- Libros decorativos (SVG inline) -->
+        <div class="buca-book-stack">
+          <div class="buca-book buca-book--blue"><span>García Márquez</span></div>
+          <div class="buca-book buca-book--green"><span>Borges</span></div>
+          <div class="buca-book buca-book--red"><span>Rivera</span></div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- Banda de cita -->
+  {%- if section.settings.quote != blank -%}
+    <div class="buca-hero__quote-band">
+      <p>{{ section.settings.quote }}</p>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Texto principal"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "— Librería independiente desde 2018"
+    },
+    {
+      "type": "text",
+      "id": "title_line1",
+      "label": "Título — línea 1",
+      "default": "El libro que"
+    },
+    {
+      "type": "text",
+      "id": "title_line2",
+      "label": "Título — línea 2 (en cursiva dorada)",
+      "default": "te está esperando"
+    },
+    {
+      "type": "text",
+      "id": "title_line3",
+      "label": "Título — línea 3",
+      "default": "ya está aquí."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "En Bucarica creemos que cada libro tiene un dueño. Libros físicos cuidadosamente seleccionados para lectores que saben lo que buscan — y para los que todavía no lo saben."
+    },
+    {
+      "type": "header",
+      "content": "Botones"
+    },
+    {
+      "type": "text",
+      "id": "btn_primary_label",
+      "label": "Botón primario — texto",
+      "default": "Ver catálogo"
+    },
+    {
+      "type": "url",
+      "id": "btn_primary_url",
+      "label": "Botón primario — enlace"
+    },
+    {
+      "type": "text",
+      "id": "btn_secondary_label",
+      "label": "Botón secundario — texto",
+      "default": "Nuestra historia"
+    },
+    {
+      "type": "url",
+      "id": "btn_secondary_url",
+      "label": "Botón secundario — enlace"
+    },
+    {
+      "type": "header",
+      "content": "Visual"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Imagen hero (opcional)",
+      "info": "Si no hay imagen, se muestran los libros decorativos."
+    },
+    {
+      "type": "header",
+      "content": "Banda de cita"
+    },
+    {
+      "type": "text",
+      "id": "quote",
+      "label": "Cita literaria",
+      "default": "«Un libro es un sueño que tienes en tus manos.» — Neil Gaiman"
+    },
+    {
+      "type": "header",
+      "content": "Estilo"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#F5F5DC"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Bucarica"
+    }
+  ]
+}
+{% endschema %}

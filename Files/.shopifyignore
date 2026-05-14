@@ -1,0 +1,22 @@
+# Archivos ignorados por Shopify CLI al hacer push
+# (equivalente a .gitignore pero para shopify theme push)
+
+# Entorno virtual de Python (carpeta backend — no parte del tema)
+backend/
+.venv/
+venv/
+__pycache__/
+
+# Frontend React/Vite (compilado ya en assets/)
+frontend/
+node_modules/
+
+# Configuración de desarrollo
+*.log
+.DS_Store
+.env
+.env.*
+
+# Editor
+.vscode/
+.idea/

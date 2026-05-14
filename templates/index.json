@@ -1,0 +1,92 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "tagline": "— Librería independiente desde 2018",
+        "title_line1": "El libro que",
+        "title_line2": "te está esperando",
+        "title_line3": "ya está aquí.",
+        "description": "En Bucarica creemos que cada libro tiene un dueño. Libros físicos cuidadosamente seleccionados para lectores que saben lo que buscan — y para los que todavía no lo saben.",
+        "btn_primary_label": "Ver catálogo",
+        "btn_primary_url": "/collections/all",
+        "btn_secondary_label": "Nuestra historia",
+        "btn_secondary_url": "#about",
+        "quote": "«Un libro es un sueño que tienes en tus manos.» — Neil Gaiman",
+        "bg_color": "#F5F5DC"
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Selección Destacada",
+        "subtitle": "Una pequeña muestra de lo que te espera en nuestra librería",
+        "products_limit": 6,
+        "show_filters": true,
+        "show_cta": true,
+        "cta_label": "Ver catálogo completo →",
+        "bg_color": "#FAF8F2"
+      }
+    },
+    "about": {
+      "type": "about",
+      "settings": {
+        "label": "Nuestra Historia",
+        "title": "Más que una librería.",
+        "title_em": "Un punto de encuentro.",
+        "text_1": "Bucarica nació en Medellín en 2018 con una convicción simple: los libros físicos no van a morir nunca, porque tienen algo que ningún dispositivo puede replicar — el peso de una historia entre tus manos.",
+        "text_2": "Cada libro que entra a nuestro catálogo es elegido a mano. Sin algoritmos. Sin listas de bestsellers. Solo criterio lector y amor por la literatura colombiana y latinoamericana.",
+        "stat1_num": "2018",
+        "stat1_label": "Año de fundación",
+        "stat2_num": "+1.200",
+        "stat2_label": "Títulos disponibles",
+        "stat3_num": "4.9★",
+        "stat3_label": "Valoración promedio",
+        "bg_color": "#4B3621"
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "block_order": ["review_1", "review_2"],
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "text": "Un lugar mágico. Entré buscando un libro y salí con cinco. La curaduría es impecable y los libreros conocen cada título como si lo hubieran escrito ellos mismos.",
+            "name": "Camila Restrepo",
+            "city": "Medellín",
+            "stars": 5
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "text": "Finalmente una librería que no se rinde a los bestsellers de aeropuerto. Aquí encontré autores que cambiarán mi forma de leer para siempre.",
+            "name": "Andrés Montoya",
+            "city": "Bogotá",
+            "stars": 5
+          }
+        }
+      },
+      "settings": {
+        "title": "Lo que dicen nuestros lectores",
+        "bg_color": "#FAF8F2"
+      }
+    },
+    "contact": {
+      "type": "contact",
+      "settings": {
+        "title": "Visítanos o escríbenos",
+        "subtitle": "¿Buscas un título específico? ¿Quieres una recomendación? Con gusto te ayudamos.",
+        "btn_label": "Enviar mensaje",
+        "show_info": true,
+        "address": "Calle 10 #43E-31, El Poblado, Medellín",
+        "hours": "Lun–Sáb 10am–7pm · Dom 11am–5pm",
+        "whatsapp": "+57 311 000 0000",
+        "instagram": "@bucarica.libros",
+        "bg_color": "#FAF8F2"
+      }
+    }
+  },
+  "order": ["hero", "featured_collection", "about", "reviews", "contact"]
+}

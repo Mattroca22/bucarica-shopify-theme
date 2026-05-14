@@ -1,0 +1,144 @@
+<section
+  id="about"
+  class="buca-about"
+  style="background-color: {{ section.settings.bg_color }};"
+>
+  <div class="buca-about__inner">
+
+    {%- if section.settings.label != blank -%}
+      <p class="buca-about__label">{{ section.settings.label }}</p>
+    {%- endif -%}
+
+    <h2 class="buca-about__title">{{ section.settings.title }}</h2>
+    {%- if section.settings.title_em != blank -%}
+      <p class="buca-about__title-em">{{ section.settings.title_em }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.text_1 != blank -%}
+      <p class="buca-about__text">{{ section.settings.text_1 }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.text_2 != blank -%}
+      <p class="buca-about__text buca-about__text--muted">{{ section.settings.text_2 }}</p>
+    {%- endif -%}
+
+    <div class="buca-about__divider"></div>
+
+    <!-- Stats -->
+    <div class="buca-stats">
+      {%- for i in (1..3) -%}
+        {%- liquid
+          case i
+            when 1
+              assign stat_num = section.settings.stat1_num
+              assign stat_label = section.settings.stat1_label
+            when 2
+              assign stat_num = section.settings.stat2_num
+              assign stat_label = section.settings.stat2_label
+            when 3
+              assign stat_num = section.settings.stat3_num
+              assign stat_label = section.settings.stat3_label
+          endcase
+        -%}
+        {%- if stat_num != blank -%}
+          <div class="buca-stats__item">
+            <span class="buca-stats__num">{{ stat_num }}</span>
+            <span class="buca-stats__label">{{ stat_label }}</span>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Nuestra Historia",
+  "tag": "section",
+  "class": "section-about",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Etiqueta superior",
+      "default": "Nuestra Historia"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Más que una librería."
+    },
+    {
+      "type": "text",
+      "id": "title_em",
+      "label": "Título en cursiva dorada",
+      "default": "Un punto de encuentro."
+    },
+    {
+      "type": "textarea",
+      "id": "text_1",
+      "label": "Párrafo 1",
+      "default": "Bucarica nació en Medellín en 2018 con una convicción simple: los libros físicos no van a morir nunca, porque tienen algo que ningún dispositivo puede replicar — el peso de una historia entre tus manos."
+    },
+    {
+      "type": "textarea",
+      "id": "text_2",
+      "label": "Párrafo 2",
+      "default": "Cada libro que entra a nuestro catálogo es elegido a mano. Sin algoritmos. Sin listas de bestsellers. Solo criterio lector y amor por la literatura colombiana y latinoamericana."
+    },
+    {
+      "type": "header",
+      "content": "Estadísticas"
+    },
+    {
+      "type": "text",
+      "id": "stat1_num",
+      "label": "Estadística 1 — número",
+      "default": "2018"
+    },
+    {
+      "type": "text",
+      "id": "stat1_label",
+      "label": "Estadística 1 — etiqueta",
+      "default": "Año de fundación"
+    },
+    {
+      "type": "text",
+      "id": "stat2_num",
+      "label": "Estadística 2 — número",
+      "default": "+1.200"
+    },
+    {
+      "type": "text",
+      "id": "stat2_label",
+      "label": "Estadística 2 — etiqueta",
+      "default": "Títulos disponibles"
+    },
+    {
+      "type": "text",
+      "id": "stat3_num",
+      "label": "Estadística 3 — número",
+      "default": "4.9★"
+    },
+    {
+      "type": "text",
+      "id": "stat3_label",
+      "label": "Estadística 3 — etiqueta",
+      "default": "Valoración promedio"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#4B3621"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nuestra Historia"
+    }
+  ]
+}
+{% endschema %}

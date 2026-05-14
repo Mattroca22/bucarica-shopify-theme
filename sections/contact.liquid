@@ -1,0 +1,215 @@
+<section
+  id="contacto"
+  class="buca-contact"
+  style="background-color: {{ section.settings.bg_color }};"
+>
+  <div class="buca-contact__inner">
+
+    <div class="buca-section-heading">
+      <p class="buca-ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</p>
+      <h2 class="buca-section-heading__title">{{ section.settings.title }}</h2>
+      <div class="buca-section-heading__line"></div>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="buca-section-heading__sub">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <!-- Formulario nativo de Shopify (action="/contact") -->
+    {%- form 'contact', id: 'buca-contact-form' -%}
+
+      {%- if form.posted_successfully? -%}
+        <div class="buca-contact__success" role="alert" aria-live="polite">
+          <p>✓ {{ section.settings.success_msg | default: 'Mensaje enviado. Te responderemos pronto.' }}</p>
+        </div>
+      {%- endif -%}
+
+      {%- if form.errors -%}
+        <div class="buca-contact__errors" role="alert">
+          <p>{{ form.errors | default_errors }}</p>
+        </div>
+      {%- endif -%}
+
+      <div class="buca-contact__form">
+
+        <label class="buca-contact__label" for="contact-name">
+          Tu nombre
+          <input
+            type="text"
+            id="contact-name"
+            name="contact[name]"
+            class="buca-contact__field"
+            placeholder="Tu nombre"
+            autocomplete="name"
+            required
+            value="{{ form.name }}"
+          >
+        </label>
+
+        <label class="buca-contact__label" for="contact-email">
+          Tu correo
+          <input
+            type="email"
+            id="contact-email"
+            name="contact[email]"
+            class="buca-contact__field"
+            placeholder="Tu correo"
+            autocomplete="email"
+            required
+            value="{{ form.email }}"
+          >
+        </label>
+
+        <label class="buca-contact__label" for="contact-message">
+          Mensaje
+          <textarea
+            id="contact-message"
+            name="contact[body]"
+            class="buca-contact__field buca-contact__field--textarea"
+            placeholder="{{ section.settings.placeholder | default: '¿Qué libro estás buscando o qué quieres decirnos?' }}"
+            rows="5"
+            required
+          >{{ form.body }}</textarea>
+        </label>
+
+        <!-- Token CSRF de Shopify (incluido automáticamente por el tag form) -->
+        <button type="submit" class="buca-btn buca-btn--send buca-btn--full-width">
+          {{ section.settings.btn_label | default: 'Enviar mensaje' }}
+        </button>
+
+      </div>
+    {%- endform -%}
+
+    <!-- Info de contacto -->
+    {%- if section.settings.show_info -%}
+      <div class="buca-contact__info">
+        {%- if section.settings.address != blank -%}
+          <div class="buca-contact__info-item">
+            <span class="buca-contact__info-label">Dirección</span>
+            <span class="buca-contact__info-value">{{ section.settings.address }}</span>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.hours != blank -%}
+          <div class="buca-contact__info-item">
+            <span class="buca-contact__info-label">Horario</span>
+            <span class="buca-contact__info-value">{{ section.settings.hours }}</span>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.whatsapp != blank -%}
+          <div class="buca-contact__info-item">
+            <span class="buca-contact__info-label">WhatsApp</span>
+            <a
+              class="buca-contact__info-value"
+              href="https://wa.me/{{ section.settings.whatsapp | remove: '+' | remove: ' ' }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ section.settings.whatsapp }}
+            </a>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.instagram != blank -%}
+          <div class="buca-contact__info-item">
+            <span class="buca-contact__info-label">Instagram</span>
+            <a
+              class="buca-contact__info-value"
+              href="https://instagram.com/{{ section.settings.instagram | remove: '@' }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ section.settings.instagram }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contacto",
+  "tag": "section",
+  "class": "section-contact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Visítanos o escríbenos"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "¿Buscas un título específico? ¿Quieres una recomendación? Con gusto te ayudamos."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder del mensaje",
+      "default": "¿Qué libro estás buscando o qué quieres decirnos?"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Texto del botón",
+      "default": "Enviar mensaje"
+    },
+    {
+      "type": "text",
+      "id": "success_msg",
+      "label": "Mensaje de éxito",
+      "default": "Mensaje enviado. Te responderemos pronto."
+    },
+    {
+      "type": "header",
+      "content": "Información de contacto"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_info",
+      "label": "Mostrar información de contacto",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Dirección",
+      "default": "Calle 10 #43E-31, El Poblado, Medellín"
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "label": "Horario",
+      "default": "Lun–Sáb 10am–7pm · Dom 11am–5pm"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp",
+      "label": "Número WhatsApp (con código de país)",
+      "default": "+57 311 000 0000"
+    },
+    {
+      "type": "text",
+      "id": "instagram",
+      "label": "Instagram (usuario)",
+      "default": "@bucarica.libros"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#FAF8F2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contacto"
+    }
+  ]
+}
+{% endschema %}

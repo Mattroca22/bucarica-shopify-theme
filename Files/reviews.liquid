@@ -1,0 +1,134 @@
+<section
+  id="reviews"
+  class="buca-reviews"
+  style="background-color: {{ section.settings.bg_color }};"
+>
+  <div class="buca-reviews__inner">
+
+    <div class="buca-section-heading">
+      <p class="buca-ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</p>
+      <h2 class="buca-section-heading__title">{{ section.settings.title }}</h2>
+      <div class="buca-section-heading__line"></div>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="buca-reviews__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'review' -%}
+            <article
+              class="buca-review-card"
+              {{ block.shopify_attributes }}
+            >
+              <p class="buca-review-card__quote-mark" aria-hidden="true">"</p>
+
+              <div class="buca-review-card__stars" aria-label="{{ block.settings.stars }} estrellas">
+                {%- for i in (1..block.settings.stars) -%}★{%- endfor -%}
+              </div>
+
+              <blockquote class="buca-review-card__text">
+                <p>{{ block.settings.text }}</p>
+              </blockquote>
+
+              <div class="buca-review-card__divider"></div>
+
+              <footer class="buca-review-card__footer">
+                <cite>
+                  <span class="buca-review-card__name">{{ block.settings.name }}</span>
+                  {%- if block.settings.city != blank -%}
+                    <span class="buca-review-card__city">, {{ block.settings.city }}, Colombia</span>
+                  {%- endif -%}
+                </cite>
+              </footer>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="buca-reviews__empty">Añade testimonios desde el Editor de Temas.</p>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonios",
+  "tag": "section",
+  "class": "section-reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título de la sección",
+      "default": "Lo que dicen nuestros lectores"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#FAF8F2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Testimonio",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texto del testimonio",
+          "default": "Un lugar mágico. Entré buscando un libro y salí con cinco."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre del lector",
+          "default": "Camila Restrepo"
+        },
+        {
+          "type": "text",
+          "id": "city",
+          "label": "Ciudad",
+          "default": "Medellín"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Estrellas",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonios",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "text": "Un lugar mágico. Entré buscando un libro y salí con cinco. La curaduría es impecable y los libreros conocen cada título como si lo hubieran escrito ellos mismos.",
+            "name": "Camila Restrepo",
+            "city": "Medellín",
+            "stars": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "text": "Finalmente una librería que no se rinde a los bestsellers de aeropuerto. Aquí encontré autores que cambiarán mi forma de leer para siempre.",
+            "name": "Andrés Montoya",
+            "city": "Bogotá",
+            "stars": 5
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,261 @@
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign products_limit = section.settings.products_limit | default: 6
+-%}
+
+<section
+  id="catalogo"
+  class="buca-catalog"
+  style="background-color: {{ section.settings.bg_color }};"
+>
+  <div class="buca-catalog__inner">
+
+    <!-- Encabezado de sección -->
+    <div class="buca-section-heading">
+      <p class="buca-ornament" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</p>
+      <h2 class="buca-section-heading__title">{{ section.settings.title }}</h2>
+      <div class="buca-section-heading__line"></div>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="buca-section-heading__sub">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <!-- Filtros por tipo de producto -->
+    {%- if section.settings.show_filters -%}
+      <div class="buca-filters" role="group" aria-label="Filtrar por categoría">
+        <button
+          class="buca-filter-btn buca-filter-btn--active"
+          data-filter="all"
+          aria-pressed="true"
+        >
+          Todos
+        </button>
+
+        {%- assign filter_tags = '' -%}
+        {%- if collection != blank -%}
+          {%- for product in collection.products limit: products_limit -%}
+            {%- for tag in product.tags -%}
+              {%- unless filter_tags contains tag -%}
+                {%- assign filter_tags = filter_tags | append: tag | append: ',' -%}
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- assign filter_tags_array = filter_tags | split: ',' -%}
+        {%- for tag in filter_tags_array -%}
+          {%- if tag != '' -%}
+            <button
+              class="buca-filter-btn"
+              data-filter="{{ tag | handle }}"
+              aria-pressed="false"
+            >
+              {{ tag }}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Grid de productos -->
+    <div class="buca-products-grid" data-products-grid>
+      {%- if collection != blank and collection.products_count > 0 -%}
+        {%- for product in collection.products limit: products_limit -%}
+          {%- liquid
+            assign variant = product.selected_or_first_available_variant
+            assign available = variant.available
+            assign badge = product.metafields.bucarica.badge | default: product.tags.first
+          -%}
+
+          <article
+            class="buca-product-card"
+            data-product-tags="{{ product.tags | join: ',' | handleize }}"
+            data-available="{{ available }}"
+          >
+            <!-- Portada -->
+            <div class="buca-product-card__cover-wrap">
+              {%- if product.featured_image != blank -%}
+                <a href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+                  {{
+                    product.featured_image
+                    | image_url: width: 120, height: 160, crop: 'center'
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'buca-product-card__img',
+                      alt: product.featured_image.alt | default: product.title
+                  }}
+                </a>
+              {%- else -%}
+                <!-- Portada placeholder con color del metafield -->
+                <div
+                  class="buca-product-card__cover-placeholder"
+                  style="background-color: {{ product.metafields.bucarica.cover_color | default: '#4B3621' }};"
+                  aria-hidden="true"
+                >📖</div>
+              {%- endif -%}
+
+              {%- if badge != blank -%}
+                <span class="buca-product-card__badge">{{ badge }}</span>
+              {%- endif -%}
+            </div>
+
+            <!-- Info -->
+            <div class="buca-product-card__body">
+              <h3 class="buca-product-card__title">
+                <a href="{{ product.url }}">{{ product.title }}</a>
+              </h3>
+
+              {%- if product.metafields.bucarica.author != blank -%}
+                <p class="buca-product-card__author">{{ product.metafields.bucarica.author }}</p>
+              {%- endif -%}
+
+              <p class="buca-product-card__type">{{ product.type }}</p>
+
+              <div class="buca-product-card__divider"></div>
+
+              <div class="buca-product-card__price-row">
+                <span class="buca-product-card__price">
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="buca-product-card__price-compare">{{ product.compare_at_price | money }}</span>
+                  {%- endif -%}
+                  {{ product.price | money }}
+                </span>
+                <span class="buca-product-card__format">Libro físico</span>
+              </div>
+
+              <!-- Indicador de stock -->
+              <div class="buca-product-card__stock-row">
+                <span class="buca-stock-dot{% unless available %} buca-stock-dot--out{% endunless %}"></span>
+                <span class="buca-product-card__stock-label">
+                  {%- if available -%}
+                    {%- if variant.inventory_quantity > 0 and variant.inventory_management == 'shopify' -%}
+                      {{ variant.inventory_quantity }} disponibles
+                    {%- else -%}
+                      Disponible
+                    {%- endif -%}
+                  {%- else -%}
+                    Agotado
+                  {%- endif -%}
+                </span>
+              </div>
+
+              <!-- Botón añadir al carrito -->
+              {%- if available -%}
+                <button
+                  type="button"
+                  class="buca-btn buca-btn--buy"
+                  data-add-to-cart="{{ variant.id }}"
+                  aria-label="Comprar {{ product.title }}"
+                >
+                  Comprar
+                </button>
+              {%- else -%}
+                <button
+                  type="button"
+                  class="buca-btn buca-btn--soldout"
+                  disabled
+                  aria-label="{{ product.title }} — Agotado"
+                >
+                  Agotado
+                </button>
+              {%- endif -%}
+            </div>
+          </article>
+
+        {%- endfor -%}
+      {%- else -%}
+        <p class="buca-catalog__empty">
+          Próximamente más libros en esta sección.
+          <a href="{{ routes.collections_url }}">Ver todo el catálogo →</a>
+        </p>
+      {%- endif -%}
+    </div>
+
+    <!-- CTA ver catálogo completo -->
+    {%- if section.settings.show_cta and collection != blank -%}
+      <div class="buca-catalog__cta">
+        <a href="{{ collection.url }}" class="buca-btn buca-btn--outline buca-btn--italic">
+          {{ section.settings.cta_label | default: 'Ver catálogo completo →' }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Selección destacada",
+  "tag": "section",
+  "class": "section-featured-collection",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colección"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección de libros"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Número máximo de productos",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Textos"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título de la sección",
+      "default": "Selección Destacada"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Una pequeña muestra de lo que te espera en nuestra librería"
+    },
+    {
+      "type": "header",
+      "content": "Opciones"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Mostrar filtros por categoría",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Mostrar botón \"Ver catálogo completo\"",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del botón CTA",
+      "default": "Ver catálogo completo →"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#FAF8F2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Selección destacada"
+    }
+  ]
+}
+{% endschema %}

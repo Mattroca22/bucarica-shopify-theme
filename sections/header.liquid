@@ -1,0 +1,135 @@
+<header
+  id="shopify-section-header"
+  class="buca-header{% if section.settings.sticky %} buca-header--sticky{% endif %}"
+  role="banner"
+>
+  <div class="buca-header__inner">
+
+    <!-- LOGO -->
+    <a href="{{ routes.root_url }}" class="buca-header__logo" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo != blank -%}
+        {{
+          section.settings.logo
+          | image_url: width: 180
+          | image_tag: loading: 'eager', alt: shop.name, class: 'buca-header__logo-img'
+        }}
+      {%- else -%}
+        <span class="buca-logo__name">{{ section.settings.logo_text | default: shop.name }}</span>
+        <span class="buca-logo__sub">{{ section.settings.logo_tagline | default: 'Librería · Medellín' }}</span>
+      {%- endif -%}
+    </a>
+
+    <!-- NAV DESKTOP -->
+    <nav class="buca-header__nav" aria-label="Navegación principal">
+      <ul class="buca-header__nav-list" role="list">
+        {%- for link in section.settings.menu.links -%}
+          <li>
+            <a
+              href="{{ link.url }}"
+              class="buca-header__nav-link{% if link.active %} buca-header__nav-link--active{% endif %}"
+            >
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <!-- ACTIONS: carrito + hamburguesa -->
+    <div class="buca-header__actions">
+
+      <!-- Botón carrito Shopify nativo -->
+      <button
+        type="button"
+        class="buca-cart-btn"
+        aria-label="Abrir carrito"
+        data-cart-toggle
+      >
+        <svg class="buca-cart-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        Carrito
+        <span class="buca-cart-btn__badge" data-cart-count aria-live="polite" aria-atomic="true">
+          {{- cart.item_count -}}
+        </span>
+      </button>
+
+      <!-- Hamburguesa mobile -->
+      <button
+        type="button"
+        class="buca-hamburger"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-menu-toggle
+      >
+        <span class="buca-hamburger__line"></span>
+        <span class="buca-hamburger__line"></span>
+        <span class="buca-hamburger__line"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- NAV MOBILE -->
+  <nav id="mobile-nav" class="buca-mobile-nav" aria-label="Menú móvil" hidden>
+    <ul class="buca-mobile-nav__list" role="list">
+      {%- for link in section.settings.menu.links -%}
+        <li>
+          <a
+            href="{{ link.url }}"
+            class="buca-mobile-nav__link{% if link.active %} buca-mobile-nav__link--active{% endif %}"
+          >
+            {{ link.title }}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (imagen)"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Texto del logo",
+      "default": "Bucarica",
+      "info": "Se usa cuando no hay imagen de logo."
+    },
+    {
+      "type": "text",
+      "id": "logo_tagline",
+      "label": "Tagline bajo el logo",
+      "default": "Librería · Medellín"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú de navegación",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Header fijo al hacer scroll",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}

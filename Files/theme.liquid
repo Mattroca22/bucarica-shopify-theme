@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  <title>
+    {{ page_title }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Página {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  <!-- Canonical & hreflang -->
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <!-- Shopify obligatorio: meta tags, og tags, scripts de apps, etc. -->
+  {{ content_for_header }}
+
+  <!-- CSS principal del tema -->
+  {{ 'bucarica.css' | asset_url | stylesheet_tag }}
+
+  <!-- Preload de assets críticos -->
+  <link rel="preload" href="{{ 'bucarica.css' | asset_url }}" as="style">
+  <link rel="preload" href="{{ 'bucarica-theme.js' | asset_url }}" as="script">
+
+  <!-- Open Graph -->
+  {%- if page_image -%}
+    <meta property="og:image" content="{{ page_image | image_url: width: 1200 }}">
+    <meta property="og:image:width" content="1200">
+  {%- endif -%}
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ shop.name }}">
+
+  <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+</head>
+
+<body class="buca-body template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+
+  <!-- Skip to content (accesibilidad) -->
+  <a class="skip-to-content-link" href="#MainContent">Saltar al contenido</a>
+
+  <!-- HEADER: cargado como sección para ser editable en el Theme Editor -->
+  {% section 'header' %}
+
+  <!-- Contenido de la página (templates) -->
+  <main id="MainContent" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  <!-- FOOTER -->
+  {% section 'footer' %}
+
+  <!-- Botón flotante WhatsApp -->
+  {% render 'whatsapp-button' %}
+
+  <!-- Cart Drawer (siempre en DOM, oculto por CSS) -->
+  {% render 'cart-drawer' %}
+
+  <!-- JS principal del tema — defer para no bloquear render -->
+  <script src="{{ 'bucarica-theme.js' | asset_url }}" defer></script>
+
+</body>
+</html>

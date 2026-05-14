@@ -1,0 +1,56 @@
+<!-- Cart Drawer — controlado por bucarica-theme.js -->
+<div
+  id="cart-drawer"
+  class="buca-cart-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Carrito de compras"
+  aria-hidden="true"
+>
+  <!-- Overlay -->
+  <div class="buca-cart-drawer__overlay" data-cart-close></div>
+
+  <!-- Panel -->
+  <div class="buca-cart-drawer__panel">
+
+    <!-- Header -->
+    <div class="buca-cart-drawer__header">
+      <h2 class="buca-cart-drawer__title">
+        <svg class="buca-cart-drawer__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        Carrito
+      </h2>
+      <button
+        type="button"
+        class="buca-cart-drawer__close"
+        aria-label="Cerrar carrito"
+        data-cart-close
+      >×</button>
+    </div>
+
+    <!-- Ítems (se rellena vía JS con la Cart API de Shopify) -->
+    <div class="buca-cart-drawer__items" data-cart-items>
+      <p class="buca-cart-drawer__empty">Tu carrito está vacío.</p>
+    </div>
+
+    <!-- Footer con total y checkout -->
+    <div class="buca-cart-drawer__footer" data-cart-footer hidden>
+      <div class="buca-cart-drawer__total-row">
+        <span>Total</span>
+        <span data-cart-total>—</span>
+      </div>
+      <a
+        href="{{ routes.cart_url }}"
+        class="buca-btn buca-btn--buy buca-btn--full-width"
+        data-cart-checkout
+      >
+        Proceder al pago →
+      </a>
+      <p class="buca-cart-drawer__powered">Powered by Shopify</p>
+    </div>
+
+  </div>
+</div>
