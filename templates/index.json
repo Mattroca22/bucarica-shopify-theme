@@ -28,7 +28,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "collection": "",
+        "collection": "frontpage",
         "products_limit": 6,
         "title": "Selección Destacada",
         "subtitle": "Una pequeña muestra de lo que te espera en nuestra librería",
